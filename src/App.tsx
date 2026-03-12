@@ -402,17 +402,17 @@ function App() {
               </ResponsiveContainer>
             </Box>
 
-            <Box borderWidth="1px" borderRadius="lg" p={4} h="420px">
+            <Box borderWidth="1px" borderRadius="lg" p={4} h="560px">
               <Heading size="sm" mb={4}>
                 Distribuição de salários anuais
               </Heading>
               <ResponsiveContainer width="100%" height="90%">
-                <BarChart data={salaryHistogram}>
+                <BarChart data={salaryHistogram} margin={{ right: 16, top: 8, bottom: 8 }}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="faixa" hide />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="quantidade" fill="#2f855a" />
+                  <Bar dataKey="quantidade" fill="#2f855a" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </Box>

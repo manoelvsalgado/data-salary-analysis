@@ -56,7 +56,7 @@ const DATA_URL =
 
 const pieColors = ['#2b6cb0', '#2f855a', '#d69e2e', '#d53f8c', '#805ad5', '#dd6b20']
 
-function MultiSelect({
+function CheckboxFilter({
   label,
   options,
   selected,
@@ -67,20 +67,17 @@ function MultiSelect({
   selected: string[]
   onChange: (values: string[]) => void
 }) {
+  const allSelected = options.length > 0 && selected.length === options.length
+
   return (
     <Box>
       <Text fontWeight="semibold" mb={2}>
         {label}
       </Text>
-      <select
-        multiple
-        value={selected}
-        onChange={(event) => {
-          const values = Array.from(event.target.selectedOptions).map((option) => option.value)
-          onChange(values)
-        }}
+      <Box
         style={{
-          height: '160px',
+          maxHeight: '180px',
+          overflowY: 'auto',
           width: '100%',
           border: '1px solid #cbd5e0',
           borderRadius: '6px',
@@ -88,12 +85,34 @@ function MultiSelect({
           background: '#ffffff',
         }}
       >
+        <Box as="label" display="flex" alignItems="center" gap={2} mb={2}>
+          <input
+            type="checkbox"
+            checked={allSelected}
+            onChange={(event) => {
+              onChange(event.target.checked ? options : [])
+            }}
+          />
+          <Text fontWeight="medium">Selecionar todos</Text>
+        </Box>
+
         {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
+          <Box key={option} as="label" display="flex" alignItems="center" gap={2} mb={1}>
+            <input
+              type="checkbox"
+              checked={selected.includes(option)}
+              onChange={(event) => {
+                if (event.target.checked) {
+                  onChange([...selected, option])
+                  return
+                }
+                onChange(selected.filter((value) => value !== option))
+              }}
+            />
+            <Text>{option}</Text>
+          </Box>
         ))}
-      </select>
+      </Box>
     </Box>
   )
 }
@@ -299,25 +318,25 @@ function App() {
             Filtros
           </Heading>
           <SimpleGrid columns={1} gap={4}>
-            <MultiSelect
+            <CheckboxFilter
               label="Ano"
               options={options.anos}
               selected={filters.anos}
               onChange={(anos) => setFilters((old) => ({ ...old, anos }))}
             />
-            <MultiSelect
+            <CheckboxFilter
               label="Senioridade"
               options={options.senioridades}
               selected={filters.senioridades}
               onChange={(senioridades) => setFilters((old) => ({ ...old, senioridades }))}
             />
-            <MultiSelect
+            <CheckboxFilter
               label="Tipo de contrato"
               options={options.contratos}
               selected={filters.contratos}
               onChange={(contratos) => setFilters((old) => ({ ...old, contratos }))}
             />
-            <MultiSelect
+            <CheckboxFilter
               label="Tamanho da empresa"
               options={options.tamanhos}
               selected={filters.tamanhos}
@@ -363,17 +382,22 @@ function App() {
           </SimpleGrid>
 
           <SimpleGrid columns={{ base: 1, xl: 2 }} gap={6}>
-            <Box borderWidth="1px" borderRadius="lg" p={4} h="420px">
+            <Box borderWidth="1px" borderRadius="lg" p={4} h="560px">
               <Heading size="sm" mb={4}>
                 Top 10 cargos por salário médio
               </Heading>
               <ResponsiveContainer width="100%" height="90%">
-                <BarChart data={topCargos} layout="vertical" margin={{ left: 30 }}>
+                <BarChart
+                  data={topCargos}
+                  layout="vertical"
+                  margin={{ left: 30, right: 16, top: 8, bottom: 8 }}
+                  barCategoryGap="30%"
+                >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" />
-                  <YAxis type="category" dataKey="cargo" width={150} />
+                  <XAxis type="number" tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                  <YAxis type="category" dataKey="cargo" width={170} tick={{ fontSize: 12 }} />
                   <Tooltip formatter={(value) => formatCurrency(value)} />
-                  <Bar dataKey="media" fill="#2b6cb0" />
+                  <Bar dataKey="media" fill="#2b6cb0" radius={[0, 4, 4, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </Box>

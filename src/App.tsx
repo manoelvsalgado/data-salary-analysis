@@ -188,7 +188,7 @@ function App() {
     }
 
     const salaryTotal = filtered.reduce((sum, row) => sum + row.usd, 0)
-    const salaryMax = Math.max(...filtered.map((row) => row.usd))
+    const salaryMax = filtered.reduce((max, row) => (row.usd > max ? row.usd : max), -Infinity)
     const cargoCount = filtered.reduce<Record<string, number>>((acc, row) => {
       acc[row.cargo] = (acc[row.cargo] ?? 0) + 1
       return acc
@@ -224,8 +224,8 @@ function App() {
     if (!filtered.length) return []
 
     const bins = 20
-    const min = Math.min(...filtered.map((row) => row.usd))
-    const max = Math.max(...filtered.map((row) => row.usd))
+    const min = filtered.reduce((currentMin, row) => (row.usd < currentMin ? row.usd : currentMin), Infinity)
+    const max = filtered.reduce((currentMax, row) => (row.usd > currentMax ? row.usd : currentMax), -Infinity)
     const step = Math.max(1, Math.ceil((max - min) / bins))
     const histogram = Array.from({ length: bins }, (_, index) => ({
       faixa: `${(min + index * step).toLocaleString()}-${(min + (index + 1) * step).toLocaleString()}`,

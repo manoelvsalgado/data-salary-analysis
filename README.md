@@ -1,105 +1,64 @@
-# Dashboard de Salários na Área de Dados
+# Data Salary Analysis
 
-Dashboard interativo desenvolvido com **Python + Streamlit** para explorar salários na área de dados, com filtros dinâmicos e visualizações em **Plotly**.
+Dashboard interativo para análise de salários na área de dados, desenvolvido com React, TypeScript e Chakra UI.
 
-## Visão geral
+## Stack
 
-Este projeto permite analisar dados salariais por:
+- React + TypeScript
+- Chakra UI
+- Recharts
+- PapaParse
+- Vite
 
-- Ano
-- Senioridade
-- Tipo de contrato
-- Tamanho da empresa
+## Funcionalidades
 
-Além dos filtros, o dashboard apresenta:
+- Filtros por ano, senioridade, tipo de contrato e tamanho da empresa
+- KPIs: salário médio, salário máximo, total de registros e cargo mais frequente
+- Gráficos:
+  - Top 10 cargos por salário médio
+  - Distribuição de salários
+  - Proporção dos tipos de trabalho
+  - Top países para Data Scientist por média salarial
+- Tabela com dados detalhados filtrados
 
-- KPIs (salário médio, salário máximo, total de registros e cargo mais frequente)
-- Top 10 cargos por salário médio
-- Distribuição de salários
-- Proporção dos tipos de trabalho
-- Mapa de salário médio de Cientista de Dados por país
-
-## Tecnologias utilizadas
-
-- Python
-- Streamlit
-- Pandas
-- Plotly Express
-
-## Como executar localmente
-
-### 1) Clonar o repositório
+## Executar localmente
 
 ```bash
 git clone https://github.com/manoelvsalgado/data-salary-analysis.git
 cd data-salary-analysis
+npm install
+npm run dev
 ```
 
-### 2) Criar e ativar ambiente virtual (Linux/macOS)
+## Build de produção
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+npm run build
+npm run preview
 ```
 
-### 3) Instalar dependências
+## Deploy no GitHub Pages
 
-```bash
-pip install -r requirements.txt
-```
+Este repositório já possui workflow para deploy automático em GitHub Pages:
 
-### 4) Rodar aplicação
+- Arquivo: `.github/workflows/deploy-pages.yml`
+- Trigger: push na branch `main`
 
-```bash
-streamlit run app.py
-```
+### Habilitar no GitHub
 
-## Deploy no Streamlit Community Cloud
+1. Acesse o repositório no GitHub.
+2. Vá em **Settings > Pages**.
+3. Em **Source**, selecione **GitHub Actions**.
+4. Faça push na branch `main`.
+5. Aguarde o workflow concluir em **Actions**.
 
-1. Faça push do projeto para o GitHub.
-2. Acesse: https://share.streamlit.io/
-3. Clique em **New app**.
-4. Selecione seu repositório.
-5. Configure:
-	- **Branch**: `main`
-	- **Main file path**: `app.py`
-6. Clique em **Deploy**.
+URL esperada:
 
-Ao finalizar, você terá uma URL pública para adicionar no portfólio.
+`https://manoelvsalgado.github.io/data-salary-analysis/`
 
-## Como apresentar no portfólio
+## Scripts
 
-### Título do projeto
-
-Dashboard de Salários na Área de Dados
-
-### Descrição curta (pronta para colar)
-
-Desenvolvi um dashboard interativo para análise de salários em dados, com filtros por ano, senioridade, contrato e tamanho da empresa. A solução foi construída com Python, Streamlit, Pandas e Plotly para facilitar a exploração de tendências salariais globais e apoiar análises rápidas com visualizações claras.
-
-### Principais destaques
-
-- Interface interativa para exploração de dados
-- Visualizações analíticas com foco em tomada de decisão
-- Publicação web com Streamlit Cloud
-
-### Links para incluir
-
-- **Demo:** `https://SEU-APP.streamlit.app`
-- **Código:** `https://github.com/manoelvsalgado/data-salary-analysis`
-
-## Estrutura do projeto
-
-```bash
-.
-├── app.py
-├── requirements.txt
-├── runtime.txt
-└── README.md
-```
-
-## Melhorias futuras (opcional)
-
-- Exportação dos dados filtrados em CSV
-- Comparação de métricas entre anos
-- Inclusão de novos indicadores salariais
+- `npm run dev`: ambiente de desenvolvimento
+- `npm run build`: build de produção
+- `npm run preview`: pré-visualizar build local
+- `npm run deploy`: deploy manual com `gh-pages` (opcional)
